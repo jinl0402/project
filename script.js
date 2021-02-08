@@ -5,7 +5,15 @@ const playerSocre1 = document.getElementById('score--0');
 const playerSocre2 = document.getElementById('score--1');
 const currentSocre1 = document.getElementById('current--0');
 const currentSocre2 = document.getElementById('current--1');
-const diceNum = new Array(
+const diceNum1 = new Array(
+  'dice-1.png',
+  'dice-2.png',
+  'dice-3.png',
+  'dice-4.png',
+  'dice-5.png',
+  'dice-6.png'
+);
+const diceNum2 = new Array(
   'dice-1.png',
   'dice-2.png',
   'dice-3.png',
@@ -16,18 +24,25 @@ const diceNum = new Array(
 const rollDice = document.querySelector('.btn--roll');
 const hold = document.querySelector('.btn--hold');
 const newGame = document.querySelector('.btn--new');
-let diceImage = document.querySelector('.dice');
+let diceImage1 = document.querySelector('.dice1');
+let diceImage2 = document.querySelector('.dice2');
 
-function getRandom() {
-  return Math.floor(Math.random() * diceNum.length + 1);
+function getRandom1() {
+  return Math.floor(Math.random() * diceNum1.length + 1);
 }
-
+function getRandom2() {
+  return Math.floor(Math.random() * diceNum2.length + 1);
+}
 //get a random number from the dice
-let randomDice;
+let randomDice1;
+let randomDice2;
 
 //changing the image of the dice
-function changeDiceImage(num) {
-  diceImage.src = diceNum[num - 1];
+function changeDiceImage1(num) {
+  diceImage1.src = diceNum1[num - 1];
+}
+function changeDiceImage2(num) {
+  diceImage2.src = diceNum2[num - 1];
 }
 // changeDiceImage(randomDice);
 
@@ -39,8 +54,10 @@ const init = function () {
   currentSocre = 0;
   activePlayer = 0;
   playing = true;
-  randomDice = getRandom();
-  changeDiceImage(randomDice);
+  randomDice1 = getRandom1();
+  randomDice2 = getRandom2();
+  changeDiceImage1(randomDice1);
+  changeDiceImage2(randomDice2);
 
   playerSocre1.textContent = 0;
   playerSocre2.textContent = 0;
@@ -48,17 +65,19 @@ const init = function () {
   currentSocre2.textContent = 0;
 
   activePlayer1();
-  diceImage.classList.add('hidden');
+  diceImage1.classList.add('hidden');
+  diceImage2.classList.add('hidden');
   player1.classList.remove('player--winner');
   player2.classList.remove('player--winner');
 };
 
 init();
-function currentAdding(randomDice, currentNum) {
-  if (randomDice === 1) {
+function currentAdding(randomDice1, randomDice2, currentNum) {
+  if (randomDice1 === 1 || randomDice2 === 1) {
     return 0;
   } else {
-    return (currentNum += Number(randomDice));
+    let diceNum = Number(randomDice1) + Number(randomDice2);
+    return (currentNum += Number(diceNum));
   }
 }
 
@@ -79,11 +98,13 @@ const switchPlayer = function () {
 //roll dice
 rollDice.addEventListener('click', function () {
   if (playing) {
-    randomDice = getRandom();
-    changeDiceImage(randomDice);
+    randomDice1 = getRandom1();
+    randomDice2 = getRandom2();
+    changeDiceImage1(randomDice1);
+    changeDiceImage2(randomDice2);
 
-    if (randomDice !== 1) {
-      currentSocre = currentAdding(randomDice, currentSocre);
+    if (randomDice1 !== 1 || randomDice2 !== 1) {
+      currentSocre = currentAdding(randomDice1, randomDice2, currentSocre);
       console.log(currentSocre);
       document.getElementById(
         `current--${activePlayer}`
@@ -101,7 +122,7 @@ hold.addEventListener('click', function () {
     document.getElementById(`score--${activePlayer}`).textContent =
       score[activePlayer];
   }
-  if (score[activePlayer] >= 20) {
+  if (score[activePlayer] >= 50) {
     playing = false;
     if (activePlayer === 1) {
       player2.classList.add('player--winner');

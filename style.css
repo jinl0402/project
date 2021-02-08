@@ -148,10 +148,18 @@ main {
   outline: none;
 }
 
-.dice {
+.dice1 {
   position: absolute;
   left: 50%;
-  top: 16.5rem;
+  top: 10rem;
+  transform: translateX(-50%);
+  height: 10rem;
+  box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.2);
+}
+.dice2 {
+  position: absolute;
+  left: 50%;
+  top: 25rem;
   transform: translateX(-50%);
   height: 10rem;
   box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.2);
